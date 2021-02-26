@@ -11,6 +11,7 @@ public class Product_of_Array_Except_Self {
 		System.out.println(Arrays.toString(ans));
 
 	}
+	// Method 1
 	public static int [] ProductofArrayExceptSelf(int [] arr) {
 		int left [] = new int [arr.length];
 		int right[] = new int [arr.length];
@@ -25,6 +26,22 @@ public class Product_of_Array_Except_Self {
 		for (int i = 0; i < right.length; i++) {
 			left[i]=left[i]*right[i];
 		}
+		return left;
+	}
+	// Method II
+	public static int [] ProductofArrayExceptSelfII(int [] arr) {
+		int left [] = new int [arr.length];
+		
+		left[0]=1;
+		for (int i = 1; i < left.length; i++) {
+			left[i]=arr[i-1]*left[i-1];
+		}
+		int r =1;
+		for (int i = left.length-1; i >=0; i--) {
+			left[i]=left[i]*r;
+			r*=arr[i];
+		}
+		
 		return left;
 	}
 
