@@ -6,6 +6,7 @@ public class Arrays_Sum_Of_Two_Arrays {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+	
 		int arr []= {1,0,2,9};
 		int arr1[]= {3,4,5,6,7};
 		ArrayList<Integer> list = new ArrayList<>();
