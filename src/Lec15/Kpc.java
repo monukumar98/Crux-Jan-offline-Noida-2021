@@ -1,12 +1,11 @@
 package Lec15;
-
 public class Kpc {
 	   static String [] getchar = {"abc","def", "ghi" ,"jkl" , "mno" , "pqrs" , "tuv" , "wx" , "yz"};
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		key_paid("12","");
-
+		
 	}
 
 	public static void key_paid(String Ques, String ans) {

@@ -1,14 +1,15 @@
 package Lec21;
 
-import Lec1.Student;
 
 public class Persion_Client {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		Person p = new Person();
+		System.out.println("hey");
+		Person p = new Person("bye",90);
+		System.out.println(p.age+" "+p.name);
 		p.name = "kumal";
-		p.age = 30;
+		p.age = -30;
 		System.out.println(p.name);
 		System.out.println(p.age);
 		Person p1 = new Person();
@@ -31,7 +32,7 @@ public class Persion_Client {
 		System.out.println(myName);
 		
 		p.introduceYourself();
-		p.sayHi("Vivo");
+	//	p.sayHi("Vivo");
 
 	}
 	public static void Test3(Person s, int age, String name, int myAge, String myName) {
