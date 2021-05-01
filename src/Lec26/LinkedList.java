@@ -19,6 +19,16 @@ public class LinkedList {
 
 	}
 
+	public LinkedList() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public LinkedList(Node head, Node tail, int size) {
+		this.head = head;
+		this.tail = tail;
+		this.size = size;
+	}
+
 	private Node head;
 	private Node tail;
 	private int size;
@@ -211,4 +221,179 @@ public class LinkedList {
 		this.tail = temp;
 		this.tail.next = null;
 	}
+
+	public void ReversePonterRecursive() {
+		ReversePonterRecursive(this.head, this.head.next);
+		Node Temp = this.head;
+		this.head = this.tail;
+		this.tail = Temp;
+		this.tail.next = null;
+
+	}
+
+	private void ReversePonterRecursive(Node prev, Node Curr) {
+		if (Curr == null) {
+			return;
+		}
+		ReversePonterRecursive(prev.next, Curr.next);
+		Curr.next = prev;
+
+	}
+
+	public int mid() {
+		return Get_mid_Node().data;
+	}
+
+	private Node Get_mid_Node() {
+		Node slow = this.head;
+		Node fast = this.head;
+		while (fast.next != null && fast.next.next != null) {
+			fast = fast.next.next;
+			slow = slow.next;
+		}
+		return slow;
+
+	}
+
+	public LinkedList MergetwoSortedList(LinkedList other) {
+		Node othNode = other.head;
+		Node thisNode = this.head;
+		LinkedList temp = new LinkedList();
+		while (othNode != null && thisNode != null) {
+			if (othNode.data <= thisNode.data) {
+				temp.addlast(othNode.data);
+				othNode = othNode.next;
+			} else {
+				temp.addlast(thisNode.data);
+				thisNode = thisNode.next;
+			}
+		}
+		while (othNode != null) {
+			temp.addlast(othNode.data);
+			othNode = othNode.next;
+		}
+		while (thisNode != null) {
+			temp.addlast(thisNode.data);
+			thisNode = thisNode.next;
+		}
+		this.head = temp.head;
+		this.tail = temp.tail;
+		this.size = temp.size;
+		return this;
+
+	}
+
+	public void MergeSort() {
+		LinkedList ans = MergeHelper();
+		this.head = ans.head;
+		this.tail = ans.tail;
+		this.size = ans.size;
+	}
+
+	private LinkedList MergeHelper() {
+		if (this.size == 1) {
+			return new LinkedList(this.head, this.tail, 1);
+		}
+		Node MidNode = Get_mid_Node();
+		Node MideNodeNext = MidNode.next;
+		MidNode.next = null;
+		LinkedList fs = new LinkedList(this.head, MidNode, (this.size + 1) / 2);
+		LinkedList sh = new LinkedList(MideNodeNext, this.tail, this.size / 2);
+		fs = fs.MergeHelper();
+		sh = sh.MergeHelper();
+		return fs.MergetwoSortedList(sh);
+	}
+
+	public void createCycle() throws Exception {
+		Node node = GetNode(2);
+		this.tail.next = node;
+//		// Cir LinkedList
+//		this.tail.next=this.head;
+
+	}
+
+	public boolean floydcycleDet() {
+		Node slow = this.head;
+		Node fast = this.head;
+		while (fast.next != null && fast.next.next != null) {
+			fast = fast.next.next;
+			slow = slow.next;
+			if (slow == fast) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	private Node SlowFastMeet() {
+		Node slow = this.head;
+		Node fast = this.head;
+		while (fast.next != null && fast.next.next != null) {
+			fast = fast.next.next;
+			slow = slow.next;
+			if (slow == fast) {
+				return slow;
+			}
+		}
+		return null;
+	}
+
+	public void cycleremovel1() {
+		Node node = SlowFastMeet();
+		if (node == null) {
+			return;
+		}
+		Node temp = this.head;
+		while (temp != null) {
+
+			Node nn = node;
+			while (nn.next != node) {
+				if (nn.next == temp) {
+					nn.next = null;
+					return;
+				}
+				nn = nn.next;
+			}
+			temp = temp.next;
+		}
+
+	}
+
+	public void cycleremovel2() {
+		Node node = SlowFastMeet();
+		if (node == null) {
+			return;
+		}
+		int c = 1;
+		Node nn = node;
+		while (nn.next != node) {
+			c++;
+			nn = nn.next;
+		}
+		Node fast = this.head;
+		for (int i = 1; i <= c; i++) {
+			fast = fast.next;
+		}
+		Node start = this.head;
+		while (start.next != fast.next) {
+			start = start.next;
+			fast = fast.next;
+		}
+		fast.next = null;
+
+	}
+
+	public void FloydCycleremovel() {
+		Node node = SlowFastMeet();
+		if (node == null) {
+			return;
+		}
+		Node start = this.head;
+		while (start.next != node.next) {
+			start = start.next;
+			node = node.next;
+		}
+		node.next = null;
+	}
+
 }

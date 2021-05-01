@@ -1,5 +1,7 @@
 package Lec18;
 
+import Lec26.LinkedList;
+
 public class Merge_Sort {
 
 	public static void main(String[] args) {
@@ -56,4 +58,5 @@ public class Merge_Sort {
 		return ans;
 	
 	}
+	
 }
