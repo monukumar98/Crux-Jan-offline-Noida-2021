@@ -194,7 +194,6 @@ public class BinaryTree {
 		while (!queue.isEmpty()) {
 			Node rn = queue.remove();
 			System.out.print(rn.data + " ");
-			if (rn.left != null) {
 				queue.add(rn.left);
 			}
 			if (rn.right != null) {
