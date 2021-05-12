@@ -34,7 +34,9 @@ public class BinaryTreeClient {
 //		System.out.println(queue);
 //		System.out.println(queue.poll());//deq
 //		System.out.println(queue);
-
+		System.out.println(bt.is_Bst());
+		System.out.println(bt.is_Bst2());
+		System.out.println(bt.sizeofbstinbt());
 
 	}
 

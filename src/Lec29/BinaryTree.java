@@ -194,8 +194,10 @@ public class BinaryTree {
 		while (!queue.isEmpty()) {
 			Node rn = queue.remove();
 			System.out.print(rn.data + " ");
+			if (rn.left != null) {
 				queue.add(rn.left);
 			}
+
 			if (rn.right != null) {
 				queue.add(rn.right);
 			}
@@ -254,6 +256,7 @@ public class BinaryTree {
 				queue = stack;
 				stack = new LinkedList<>();
 				System.out.println();
+				count++;
 			}
 		}
 		System.out.println();
@@ -376,14 +379,103 @@ public class BinaryTree {
 		if (node == null) {
 			return;
 		}
-		if(max_level<level) {
-		System.out.print(node.data+" ");
-		max_level=level;
+		if (max_level < level) {
+			System.out.print(node.data + " ");
+			max_level = level;
 		}
 		left_view(node.left, level + 1);
 		left_view(node.right, level + 1);
-		
 
 	}
 
+	public int min() {
+		return min(this.root);
+	}
+
+	private int min(Node node) {
+		// TODO Auto-generated method stub
+		if (node == null) {
+			return Integer.MAX_VALUE;
+		}
+		int left_min = min(node.left);
+		int right_min = min(node.right);
+		return Math.min(left_min, Math.min(right_min, node.data));
+
+	}
+
+	public boolean is_Bst() {
+		return is_Bst(this.root);
+	}
+
+	private boolean is_Bst(Node node) {
+		// TODO Auto-generated method stub
+		if (node == null) {
+			return true;
+		}
+		boolean lbst = is_Bst(node.left);
+		boolean rbst = is_Bst(node.right);
+		int left_max = max(node.left);
+		int right_min = min(node.right);
+		if (lbst && rbst && left_max < node.data && right_min > node.data) {
+			return true;
+		}
+		return false;
+	}
+
+	private class BstPair {
+		boolean isbst = true;
+		int min = Integer.MAX_VALUE;
+		int max = Integer.MIN_VALUE;
+		int size=0;
+		int ans=0;
+
+	}
+
+	public boolean is_Bst2() {
+		return is_Bst2(this.root).isbst;
+	}
+
+	private BstPair is_Bst2(Node node) {
+		// TODO Auto-generated method stub
+		if (node == null) {
+			return new BstPair();
+		}
+		BstPair lbstp = is_Bst2(node.left);
+		BstPair rbstp = is_Bst2(node.right);
+		BstPair sbstp = new BstPair();
+		if (lbstp.isbst && rbstp.isbst && lbstp.max < node.data && rbstp.min > node.data) {
+			sbstp.isbst = true;
+			sbstp.min = Math.min(lbstp.min, Math.min(rbstp.min, node.data));
+			sbstp.max = Math.max(lbstp.max, Math.max(rbstp.max, node.data));
+
+		}
+		sbstp.isbst = false;
+		
+		return sbstp;
+
+	}
+	public int sizeofbstinbt() {
+		return sizeofbstinbt(this.root).ans;
+	}
+	private BstPair sizeofbstinbt(Node node) {
+		// TODO Auto-generated method stub
+		if (node == null) {
+			return new BstPair();
+		}
+		BstPair lbstp = sizeofbstinbt(node.left);
+		BstPair rbstp = sizeofbstinbt(node.right);
+		BstPair sbstp = new BstPair();
+		sbstp.size=lbstp.size+rbstp.size+1;
+		if (lbstp.isbst && rbstp.isbst && lbstp.max < node.data && rbstp.min > node.data) {
+			sbstp.isbst = true;
+			sbstp.min = Math.min(lbstp.min, Math.min(rbstp.min, node.data));
+			sbstp.max = Math.max(lbstp.max, Math.max(rbstp.max, node.data));
+			sbstp.ans=sbstp.size;
+
+		}
+		sbstp.isbst = false;
+		sbstp.ans=Math.max(lbstp.ans, rbstp.ans);
+		return sbstp;
+
+	}
 }
