@@ -131,4 +131,58 @@ public class BinarySearchTree {
 		}
 	}
 
+	public void deletNode(int item) {
+		deletNode(this.root, null, false, item);
+	}
+
+	private void deletNode(Node node, Node parent, boolean ilc, int item) {
+		// TODO Auto-generated method stub
+		if (node == null) {
+			return;
+		}
+
+		if (node.data > item) {
+			deletNode(node.left, node, true, item);
+		} else if (node.data < item) {
+			deletNode(node.right, node, false, item);
+
+		} else {
+			// Leaf Node
+			if (node.left == null && node.right == null) {
+				if (ilc) {
+					parent.left = null;
+				} else {
+					parent.right = null;
+				}
+			}
+			// Has one child
+			// has left child
+			else if (node.left != null && node.right == null) {
+				if (ilc) {
+					parent.left = node.left;
+					node.left = null;
+				} else {
+					parent.right = node.left;
+					node.left = null;
+				}
+			}
+			// has Right child
+			else if (node.left == null && node.right != null) {
+				if (ilc) {
+					parent.left = node.right;
+					node.right = null;
+				} else {
+					parent.right = node.right;
+					node.right = null;
+				}
+			} else {
+				int t = max(node.left);
+				node.data = t;
+				deletNode(node.left, node, true, t);
+			}
+
+		}
+
+	}
+
 }
