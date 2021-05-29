@@ -1,9 +1,9 @@
 package Lec32;
 
 public class Car implements Comparable<Car> {
-	int price;
-	int speed;
-	String color;
+	public int price;
+	public int speed;
+	public String color;
 
 	public Car(int price, int speed, String color) {
 		// TODO Auto-generated constructor stub

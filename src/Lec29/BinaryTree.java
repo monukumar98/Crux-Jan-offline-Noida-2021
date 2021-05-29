@@ -369,25 +369,6 @@ public class BinaryTree {
 
 	static int max_level = -1;
 
-	public void left_view() {
-		left_view(this.root, 0);
-		System.out.println();
-	}
-
-	private void left_view(Node node, int level) {
-		// TODO Auto-generated method stub
-		if (node == null) {
-			return;
-		}
-		if (max_level < level) {
-			System.out.print(node.data + " ");
-			max_level = level;
-		}
-		left_view(node.left, level + 1);
-		left_view(node.right, level + 1);
-
-	}
-
 	public int min() {
 		return min(this.root);
 	}
@@ -426,8 +407,8 @@ public class BinaryTree {
 		boolean isbst = true;
 		int min = Integer.MAX_VALUE;
 		int max = Integer.MIN_VALUE;
-		int size=0;
-		int ans=0;
+		int size = 0;
+		int ans = 0;
 
 	}
 
@@ -450,13 +431,15 @@ public class BinaryTree {
 
 		}
 		sbstp.isbst = false;
-		
+
 		return sbstp;
 
 	}
+
 	public int sizeofbstinbt() {
 		return sizeofbstinbt(this.root).ans;
 	}
+
 	private BstPair sizeofbstinbt(Node node) {
 		// TODO Auto-generated method stub
 		if (node == null) {
@@ -465,17 +448,68 @@ public class BinaryTree {
 		BstPair lbstp = sizeofbstinbt(node.left);
 		BstPair rbstp = sizeofbstinbt(node.right);
 		BstPair sbstp = new BstPair();
-		sbstp.size=lbstp.size+rbstp.size+1;
+		sbstp.size = lbstp.size + rbstp.size + 1;
 		if (lbstp.isbst && rbstp.isbst && lbstp.max < node.data && rbstp.min > node.data) {
 			sbstp.isbst = true;
 			sbstp.min = Math.min(lbstp.min, Math.min(rbstp.min, node.data));
 			sbstp.max = Math.max(lbstp.max, Math.max(rbstp.max, node.data));
-			sbstp.ans=sbstp.size;
+			sbstp.ans = sbstp.size;
 
 		}
 		sbstp.isbst = false;
-		sbstp.ans=Math.max(lbstp.ans, rbstp.ans);
+		sbstp.ans = Math.max(lbstp.ans, rbstp.ans);
 		return sbstp;
+
+	}
+
+	public void left_view() {
+		left_view(this.root, 0);
+		System.out.println();
+	}
+
+	private void left_view(Node node, int level) {
+		// TODO Auto-generated method stub
+		if (node == null) {
+			return;
+		}
+		if (max_level < level) {
+			System.out.print(node.data + " ");
+			max_level = level;
+		}
+		left_view(node.left, level + 1);
+		left_view(node.right, level + 1);
+
+	}
+
+	public class Pair {
+		Node node;
+		int hl;
+	}
+
+	public void Top_view() {
+		TreeMap<Integer, Pair> map = new TreeMap<>();
+		Top_view(this.root, 0, 0, map);
+		//System.out.println();
+		 for(Integer key : map.keySet()) {
+			 System.out.print(map.get(key).node.data+" ");
+		 }
+	}
+
+	private void Top_view(Node node, int vl, int chl, TreeMap<Integer, Pair> map) {
+		// TODO Auto-generated method stub
+		if(node==null) {
+			return ;
+		}
+		
+		 if(!map.containsKey(vl) ||  chl<map.get(vl).hl) {
+			 Pair p = new Pair();
+			 p.node=node;
+			 p.hl=chl;
+			 map.put(vl, p);
+		 }
+		Top_view(node.left, vl-1, chl+1, map);
+		Top_view(node.right, vl+1, chl+1, map);
+
 
 	}
 }

@@ -1,6 +1,9 @@
 package Lec32;
 
-import java.util.Arrays;
+
+import Lec33.CarColorComparator;
+import Lec33.CarPriceComprator;
+import Lec33.CarSpeedComparator;
 
 public class Genric_Demo {
 
@@ -22,10 +25,10 @@ public class Genric_Demo {
 		cars[3] = new Car(8907, 60, "Red");
 		cars[4] = new Car(3400, 89, "Grey");
 		display(cars);
-		Bubble_Sort(cars);
+		Bubble_Sort(cars ,new CarColorComparator());
 		System.out.println(">>>>>>>>>>>>");
 		display(cars);
-
+		
 	}
 
 	public static <T> void display(T arr[]) {
@@ -48,5 +51,22 @@ public class Genric_Demo {
 
 		}
 	}
+	public static void Bubble_Sort(Car [] arr, CarColorComparator camp) {
+
+		for (int pass = 1; pass < arr.length; pass++) {
+			for (int j = 0; j < arr.length - pass; j++) {
+				if(camp.compare(arr[j], arr[j+1])>0) {
+					Car t = arr[j];
+					arr[j] = arr[j + 1];
+					arr[j + 1] = t;
+
+				}
+
+			}
+
+		}
+	}
+	
+	
 
 }
