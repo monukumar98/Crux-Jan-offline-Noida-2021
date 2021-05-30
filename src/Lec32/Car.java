@@ -24,9 +24,9 @@ public class Car implements Comparable<Car> {
 	@Override
 	public int compareTo(Car o) {
 		// TODO Auto-generated method stub
-		/// return o.price-this.price;// rank
+		 return o.price-this.price;// rank
 		// return this.speed - o.speed;
-		return this.color.compareTo(o.color);
+		//return this.color.compareTo(o.color);
 		// return 0;
 	}
 }
