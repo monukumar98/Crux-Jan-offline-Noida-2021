@@ -155,6 +155,9 @@ public class Graph {
 		HashSet<Integer> visited = new HashSet<Integer>();
 		LinkedList<Integer> q = new LinkedList<Integer>();
 		for (int src : map.keySet()) {
+			if (visited.contains(src)) {
+				continue;
+			}
 			q.add(src);
 			while (!q.isEmpty()) {
 				int rv = q.removeFirst();
@@ -180,4 +183,222 @@ public class Graph {
 		System.out.println();
 
 	}
+
+	public void DFT() {
+		HashSet<Integer> visited = new HashSet<Integer>();
+		Stack<Integer> q = new Stack<Integer>();
+		for (int src : map.keySet()) {
+			if (visited.contains(src)) {
+				continue;
+			}
+			q.push(src);
+			while (!q.isEmpty()) {
+				int rv = q.pop();
+				// ignor
+				if (visited.contains(rv)) {
+					continue;
+				}
+
+				System.out.print(rv + " ");
+				// visited
+				visited.add(rv);
+				// nbrs add
+				for (int nbrs : map.get(rv).keySet()) {
+					if (!visited.contains(nbrs)) {
+						q.push(nbrs);
+					}
+				}
+
+			}
+		}
+		System.out.println();
+	}
+
+	public boolean IsCycle() {
+		HashSet<Integer> visited = new HashSet<Integer>();
+		LinkedList<Integer> q = new LinkedList<Integer>();
+		for (int src : map.keySet()) {
+			if (visited.contains(src)) {
+				continue;
+			}
+			q.add(src);
+			while (!q.isEmpty()) {
+				int rv = q.removeFirst();
+				// ignor
+				if (visited.contains(rv)) {
+					return true;
+				}
+
+				// visited
+				visited.add(rv);
+				// nbrs add
+				for (int nbrs : map.get(rv).keySet()) {
+					if (!visited.contains(nbrs)) {
+						q.add(nbrs);
+					}
+				}
+
+			}
+		}
+		return false;
+
+	}
+
+	public boolean IsConnected() {
+		HashSet<Integer> visited = new HashSet<Integer>();
+		Stack<Integer> q = new Stack<Integer>();
+		int component = 0;
+		for (int src : map.keySet()) {
+			if (visited.contains(src)) {
+				continue;
+			}
+			component++;
+			q.push(src);
+			while (!q.isEmpty()) {
+				int rv = q.pop();
+				// ignor
+				if (visited.contains(rv)) {
+					continue;
+				}
+
+				// System.out.print(rv+" ");
+				// visited
+				visited.add(rv);
+				// nbrs add
+				for (int nbrs : map.get(rv).keySet()) {
+					if (!visited.contains(nbrs)) {
+						q.push(nbrs);
+					}
+				}
+
+			}
+		}
+		return component == 1;
+	}
+
+	public boolean istree() {
+		return !IsCycle() && IsConnected();
+	}
+
+	public ArrayList<ArrayList<Integer>> GetCC() {
+		HashSet<Integer> visited = new HashSet<Integer>();
+		Stack<Integer> q = new Stack<Integer>();
+		ArrayList<ArrayList<Integer>> bl = new ArrayList<>();
+
+		for (int src : map.keySet()) {
+			if (visited.contains(src)) {
+				continue;
+			}
+			ArrayList<Integer> sl = new ArrayList<>();
+			bl.add(sl);
+
+			q.push(src);
+			while (!q.isEmpty()) {
+				int rv = q.pop();
+				// ignor
+				if (visited.contains(rv)) {
+					continue;
+				}
+				sl.add(rv);
+
+				// visited
+				visited.add(rv);
+				// nbrs add
+				for (int nbrs : map.get(rv).keySet()) {
+					if (!visited.contains(nbrs)) {
+						q.push(nbrs);
+					}
+				}
+
+			}
+		}
+		return bl;
+	}
+
+	private class PrimsPair implements Comparable<PrimsPair>{
+		int vname;
+		int acqvanme;
+		int cost;
+
+		public PrimsPair(int vname, int acqvanme, int cost) {
+			// TODO Auto-generated constructor stub
+			this.vname = vname;
+			this.cost = cost;
+			this.acqvanme = acqvanme;
+		}
+		@Override
+		public String toString() {
+			return this.vname+" vai "+this.acqvanme+" @ "+this.cost;
+		}
+		@Override
+		public int compareTo(PrimsPair o) {
+			// TODO Auto-generated method stub
+			return this.cost-o.cost;
+		}
+	}
+	public void primsAlgo() {
+		HashSet<Integer> visited = new HashSet<Integer>();
+		PriorityQueue<PrimsPair> pq = new PriorityQueue<>();
+		pq.add(new PrimsPair(1, 0, 0));
+		while(!pq.isEmpty()) {
+			PrimsPair p = pq.remove();
+			// Ignor
+			if(visited.contains(p.vname)) {
+				continue;
+			}
+			if(p.acqvanme!=0)
+			System.out.println(p);
+			visited.add(p.vname);
+			for (int nbrs : map.get(p.vname).keySet()) {
+				if(!visited.contains(nbrs)) {
+					PrimsPair np = new PrimsPair(nbrs, p.vname, map.get(p.vname).get(nbrs));
+					pq.add(np);
+				}
+			}
+		}
+	}
+	private class DijkstraPair implements Comparable<DijkstraPair>{
+		int vname;
+		String psf;
+		int cost;
+
+		public   DijkstraPair(int vname, String psf, int cost) {
+			// TODO Auto-generated constructor stub
+			this.vname = vname;
+			this.cost = cost;
+			this.psf = psf;
+		}
+		@Override
+		public String toString() {
+			return this.vname+" vai "+this.psf+" @ "+this.cost;
+		}
+		@Override
+		public int compareTo(DijkstraPair o) {
+			// TODO Auto-generated method stub
+			return this.cost-o.cost;
+		}
+	}
+	
+	public void DijkstraAlgo() {
+		HashSet<Integer> visited = new HashSet<Integer>();
+		PriorityQueue<DijkstraPair> pq = new PriorityQueue<>();
+		pq.add(new DijkstraPair(1, "", 0));
+		while(!pq.isEmpty()) {
+			DijkstraPair p = pq.remove();
+			// Ignor
+			if(visited.contains(p.vname)) {
+				continue;
+			}
+			if(p.cost!=0)
+			System.out.println(p);
+			visited.add(p.vname);
+			for (int nbrs : map.get(p.vname).keySet()) {
+				if(!visited.contains(nbrs)) {
+					DijkstraPair np = new DijkstraPair(nbrs, p.psf+p.vname+" ", map.get(p.vname).get(nbrs)+p.cost);
+					pq.add(np);
+				}
+			}
+		}
+	}
+
 }
