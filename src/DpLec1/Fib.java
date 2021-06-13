@@ -1,4 +1,4 @@
-package Lec1;
+package DpLec1;
 
 public class Fib {
 
