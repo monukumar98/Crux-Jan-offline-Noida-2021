@@ -4,14 +4,14 @@ public class Pascal_Triangle {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		int row =0;
-		int n =7;
-		while(row<n) {
+		int row =1;
+		int n =6;
+		while(row<=n) {
 			int val=1;
-			int r =0;
+			int r =1;
 			while(r<=row) {
 				System.out.print(val+" ");
-				val= (val*(row-r))/(r+1);
+				val= (val*(row-r))/(r);
 				r++;
 			}
 			// next row
